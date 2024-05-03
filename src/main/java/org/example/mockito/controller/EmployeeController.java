@@ -1,7 +1,8 @@
 package org.example.mockito.controller;
 
-import org.example.hwstream.steam.Employee;
-import org.example.mockito.steam.EmployeeService;
+import org.example.mockito.service.Employee;
+import org.example.mockito.service.EmployeeAlreadyAddedException;
+import org.example.mockito.service.EmployeeService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +22,7 @@ public class EmployeeController {
 
     @GetMapping("/add")
     public String add(@RequestParam String firstName, @RequestParam String lastName,
-                      @RequestParam String Double , @RequestParam int department) {
+                      @RequestParam int department) throws EmployeeAlreadyAddedException {
         Employee result = employeeService.add(firstName, lastName,  department);
         return generateMessage(result, "успешно создан");
     }

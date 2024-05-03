@@ -1,28 +1,27 @@
-package org.example.mockito.steam;
+package org.example.mockito.service;
 
 import java.util.Objects;
 import java.util.Random;
-import java.util.function.ObjDoubleConsumer;
 
 public class Employee {
     private String firstName;
     private String lastName;
-    private double selary;
     private int department;
+    private double selary;
 
-    public Employee(String firstName, String lastName, Double selary,
-                    int department) {
+
+    public Employee(String firstName, String lastName, int department, int selary) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.selary = selary;
         this.department = department;
+        this.selary = selary;
     }
     public Employee(String firstName, String lastName) {
         Random random = new Random();
         this.firstName = firstName;
         this.lastName = lastName;
-        this.selary = random.nextInt(10000) + 1000;
         this.department = random.nextInt(5) + 1;
+        this.selary = random.nextInt(1000) + 1000;
     }
 
     public String getFirstName() {
@@ -44,20 +43,20 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public double getSelary() {
-        return selary;
-    }
-
     public int getDepartment() {
         return department;
     }
 
-    public void setSelary(double selary) {
-        this.selary = selary;
+     public double getSelary() {
+            return selary;
     }
 
     public void setDepartment(int department) {
         this.department = department;
+    }
+        public void setSelary(double selary) {
+            this.selary = selary;
+
     }
 
     @Override
@@ -75,11 +74,24 @@ public class Employee {
 
     public String getFirstNeme() {
         return firstName;
+
+
     }
 
     public void put(Object o, Employee employee) {
+
+    }
+
+    public String getLastNaime() {
+        return null;
+    }
+
+    public Object gettFirstName() {
+        return null;
     }
 }
+
+
 
 
 

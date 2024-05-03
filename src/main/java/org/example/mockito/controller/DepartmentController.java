@@ -1,11 +1,8 @@
 package org.example.mockito.controller;
 
-import org.example.hwstream.steam.DepartmentService;
-import org.example.hwstream.steam.Employee;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.mockito.service.DepartmentService;
+import org.example.mockito.service.Employee;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -19,22 +16,27 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/max-salary")
-    public Employee getMax(@RequestParam("dep") int departmentId) {
-        return departmentService.getEmployeeWithMaxSalary(departmentId);
+    @GetMapping("{id}/salary/sum")
+    public Employee getSum(@PathVariable("id") int departmentId) {
+        return departmentService.getEmployeeSalarySum(departmentId);
     }
 
-    @GetMapping("/min-salary")
-    public Employee getMin(@RequestParam("dep") int departmentId) {
-        return departmentService.getEmployeeWithMinSalary(departmentId);
+    @GetMapping("/{id}/salary/max")
+    public double getMax(@PathVariable("id") int department) {
+        return departmentService.getEmployeeMaxSalary(department);
     }
 
-    @GetMapping(value = "/all", params = "dep")
-    public List<Employee> getAll(@RequestParam("dep") int departmentId) {
+    @GetMapping("{id}/salary/min")
+    public double getMin(@PathVariable("id") int department) {
+        return departmentService.getEmployeeMinSalary(department);
+    }
+
+    @GetMapping(value = "/{id}/employees")
+    public java.util.List<Employee> getAll(@PathVariable("id") int departmentId) {
         return departmentService.getEmployeesByDepartment(departmentId);
 
     }
-    @GetMapping("/all")
+    @GetMapping("/employees")
     public Map<Integer, List<Employee>> getEmployees() {
         return departmentService.getEmployeesGrouped();
     }

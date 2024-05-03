@@ -1,4 +1,4 @@
-package org.example.mockito.steam;
+package org.example.mockito.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -13,49 +13,48 @@ public class EmployeeService {
     private static final int SIZE_LIMIT = 5;
     private final Map<String, Employee> employees = new HashMap<>(SIZE_LIMIT);
 
+
     public Collection<Employee> getAll() {
         return employees.values();
     }
 
-    public Employee add(String firstName, String lastNaime, int department) {
-        Employee employee = new Employee(firstName, lastNaime);
+    public Employee add(Employee employee) throws EmployeeAlreadyAddedException {
         if (employees.size() >= SIZE_LIMIT) {
             throw new EmployeeStorageIsFullException();
         }
-        if (employees.containsKey(employee.getFullName())) {
+        if (employees.containsKey(createKey(employee))) {
             throw new EmployeeAlreadyAddedException();
         }
-
-        String correctedFirstName = StringUtils.capitalize(employee.getFirstNeme().toLowerCase());
-        employee.setFirstName(correctedFirstName);
-        String correctedLastName = StringUtils.capitalize(employee.getLastName().toLowerCase());
-        employee.setLastName(correctedLastName);
-        employee.put(correcteKey(employee), employee);
+        employees.put(createKey(employee), employee);
         return employee;
 
-    }
-
-    private Object correcteKey(Employee employee) {
-        return null;
     }
 
     public Employee find(String firstName, String lastNaime) {
         Employee employee = employees.get(createKey(firstName, lastNaime));
-        return employee;
+        if (employee == null) {
+        }
 
+        return employee;
     }
 
     public Employee remove(String firstName, String lastNaime) {
         return employees.remove(createKey(firstName, lastNaime));
 
+    }
+
+    private static String createKey(Employee employee) {
+        return createKey(employee.getFirstName(), employee.getLastNaime());
+    }
+
+    private static String createKey(String firstName, String lastNaime) {
+        return (firstName + lastNaime).toLowerCase();
 
     }
 
-    private String createKey(String firstName, String lastNaime) {
-        return firstName + " " + lastNaime;
-    }
-
-    private static void correctCase(String firstName, String lastNaime) {
-
+    public Employee add(String firstName, String lastName, int department) {
+        return null;
     }
 }
+
+
